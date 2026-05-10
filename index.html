@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Salary Slip Portal</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- SheetJS -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container-fluid p-0 main-wrapper">
+    <div class="row g-0 full-height">
+
+        <!-- Left Login Panel -->
+        <div class="col-lg-4 left-panel d-flex flex-column justify-content-center">
+
+            <div class="text-center mb-5">
+                <div class="icon-box mb-4">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+
+                <h1 class="portal-title">
+                    Employee Salary Slip Portal
+                </h1>
+
+                <p class="portal-subtitle">
+                    Login to view your salary slip
+                </p>
+            </div>
+
+            <div class="login-form px-4">
+
+                <div class="mb-4">
+                    <label class="form-label">
+                        Employee ID
+                    </label>
+
+                    <div class="input-group custom-input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-person"></i>
+                        </span>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="employeeId"
+                            placeholder="Enter Employee ID"
+                        >
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <label class="form-label">
+                        Mobile Number
+                    </label>
+
+                    <div class="input-group custom-input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-phone"></i>
+                        </span>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="mobileNumber"
+                            placeholder="Enter Mobile Number"
+                        >
+                    </div>
+                </div>
+
+                <button class="btn login-btn w-100" onclick="searchEmployee()">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                    Login
+                </button>
+            </div>
+
+            <div class="security-text text-center mt-5">
+                <i class="bi bi-shield-lock"></i>
+                Your data is secure and confidential.
+            </div>
+        </div>
+
+        <!-- Right Dashboard Panel -->
+        <div class="col-lg-8 right-panel">
+
+            <!-- Top Header -->
+            <div class="dashboard-header d-flex justify-content-between align-items-center">
+                <h2 class="dashboard-title">
+                    Dashboard
+                </h2>
+
+                <div class="user-section d-flex align-items-center gap-4">
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="user-avatar">
+                            <i class="bi bi-person-fill"></i>
+                        </div>
+
+                        <div>
+                            <small class="text-muted d-block">
+                                Welcome,
+                            </small>
+
+                            <strong class="emp-code" id="headerEmployeeId">
+                                None
+                            </strong>
+                        </div>
+                    </div>
+
+                    <button class="btn logout-btn" onclick="resetDashboard()">
+                        <i class="bi bi-box-arrow-right me-2"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Employee Details Card -->
+            <div class="card employee-card border-0 shadow-sm">
+
+                <div class="card-header custom-card-header">
+                    <h2 class="hello-title" id="employeeNameTitle">
+                        Hello, None
+                    </h2>
+
+                    <p class="hello-subtitle mb-0">
+                        Here is your salary slip details.
+                    </p>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <!-- Employee ID -->
+                    <div class="detail-row d-flex align-items-center justify-content-between">
+
+                        <div class="d-flex align-items-center gap-4">
+                            <div class="detail-icon blue-bg">
+                                <i class="bi bi-person-vcard"></i>
+                            </div>
+
+                            <div>
+                                <p class="detail-label mb-0">
+                                    Employee ID
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="detail-value" id="employeeIdValue">
+                            None
+                        </div>
+                    </div>
+
+                    <!-- Employee Name -->
+                    <div class="detail-row d-flex align-items-center justify-content-between">
+
+                        <div class="d-flex align-items-center gap-4">
+                            <div class="detail-icon blue-bg">
+                                <i class="bi bi-person-fill"></i>
+                            </div>
+
+                            <div>
+                                <p class="detail-label mb-0">
+                                    Employee Name
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="detail-value" id="employeeNameValue">
+                            None
+                        </div>
+                    </div>
+
+                    <!-- Mobile Number -->
+                    <div class="detail-row d-flex align-items-center justify-content-between">
+
+                        <div class="d-flex align-items-center gap-4">
+                            <div class="detail-icon blue-bg">
+                                <i class="bi bi-phone-fill"></i>
+                            </div>
+
+                            <div>
+                                <p class="detail-label mb-0">
+                                    Mobile Number
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="detail-value" id="mobileValue">
+                            None
+                        </div>
+                    </div>
+
+                    <!-- Salary Slip -->
+                    <div class="detail-row d-flex align-items-center justify-content-between flex-wrap gap-3">
+
+                        <div class="d-flex align-items-center gap-4">
+                            <div class="detail-icon pdf-bg">
+                                <i class="bi bi-file-earmark-pdf-fill"></i>
+                            </div>
+
+                            <div>
+                                <p class="detail-label mb-0">
+                                    Salary Slip PDF
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="salary-section d-flex align-items-center gap-4 flex-wrap">
+                            <a href="#" class="salary-file-link" id="salaryFileName">
+                                None
+                            </a>
+
+                            <a href="#" class="btn download-btn" id="downloadButton" target="_blank">
+                                <i class="bi bi-download me-2"></i>
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box mt-4 d-flex align-items-center gap-3">
+                <div class="info-icon">
+                    <i class="bi bi-info-circle-fill"></i>
+                </div>
+
+                <div id="messageBox">
+                    Search employee using Employee ID and Mobile Number.
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer-text">
+                © 2024 Employee Salary Slip Portal. All rights reserved.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!-- ````
+
+---
+
+## script.js
+
+```javascript
+
+```
+
+---
+
+## Updated index.html Changes
+
+Add this CDN before closing body tag:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="script.js"></script>
+```
+
+---
+
+## Excel File Format
+
+Your `employee_salary_slips.xlsx` file should contain these exact column names:
+
+| emid    | name       | monile number | pdflink                               |
+| ------- | ---------- | ------------- | ------------------------------------- |
+| EMP1023 | Ravi Kumar | 9876543210    | salary_slips/Salary_Slip_May_2024.pdf |
+
+---
+
+## Folder Structure
+
+```text
+project-folder/
+│
+├── index.html
+├── style.css
+├── script.js
+├── employee_salary_slips.xlsx
+│
+└── salary_slips/
+    ├── Salary_Slip_May_2024.pdf
+    └── another_file.pdf
+```
+
+---
+
+## Important Notes
+
+1. Keep Excel file in same folder as `index.html`
+2. PDF links inside Excel should be relative paths
+3. GitHub Pages supports this setup
+4. No backend required
+5. Do not rename Excel column names
+
+---
+
+## Required Login Button Update
+
+Update login button HTML:
+
+```html
+<button class="btn login-btn w-100" type="button">
+``` -->
