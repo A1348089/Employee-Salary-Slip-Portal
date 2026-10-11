@@ -33,7 +33,7 @@ async function loginEmployee() {
     const employee = employees.find(
       (emp) =>
         String(emp.emid).trim() === employeeId &&
-        String(emp["monile number"]).trim() === mobileNumber,
+        String(emp["mobile number"]).trim() === mobileNumber,
     );
 
     if (!employee) {
