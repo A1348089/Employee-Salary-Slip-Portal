@@ -52,13 +52,13 @@ async function loginEmployee() {
 
     detailValues[0].innerText = employee.emid;
     detailValues[1].innerText = employee.name;
-    detailValues[2].innerText = employee["monile number"];
+    detailValues[2].innerText = employee["mobile number"];
 
     const pdfLink = document.querySelector(".salary-file-link");
 
-    pdfLink.innerText = employee.pdflink;
+    pdfLink.innerText = employee["Download Link"]; 
 
-    pdfLink.href = employee.pdflink;
+    pdfLink.href = employee.["Download Link"];
 
     const downloadButton = document.querySelector(".download-btn");
 
