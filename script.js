@@ -58,7 +58,7 @@ async function loginEmployee() {
 
     pdfLink.innerText = employee["Download Link"]; 
 
-    pdfLink.href = employee.["Download Link"];
+    pdfLink.href = employee["Download Link"];
 
     const downloadButton = document.querySelector(".download-btn");
 
